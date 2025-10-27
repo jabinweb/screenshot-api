@@ -16,8 +16,7 @@ const isLocal = () => {
     return !process.env.RENDER && 
            !process.env.VERCEL && 
            !process.env.AWS_LAMBDA_FUNCTION_NAME && 
-           !process.env.VERCEL_ENV &&
-           process.env.NODE_ENV !== 'production';
+           !process.env.VERCEL_ENV;
 };
 
 // Function to launch the browser
@@ -107,8 +106,8 @@ app.get('/screenshot', async (req, res) => {
 // Export the Express app for Vercel
 module.exports = app;
 
-// Start server if not in serverless environment
-if (isLocal()) {
+// Start server if not on Vercel (Vercel handles this automatically)
+if (!process.env.VERCEL && !process.env.VERCEL_ENV) {
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
         console.log(`Screenshot API running on http://localhost:${PORT}`);
