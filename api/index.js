@@ -1,5 +1,5 @@
 const express = require('express');
-const chromium = require('@sparticuz/chromium');
+const chromium = require('@sparticuz/chromium-min');
 const puppeteerCore = require('puppeteer-core');
 
 // Only require puppeteer for local development
@@ -10,7 +10,10 @@ if (!process.env.VERCEL && !process.env.AWS_LAMBDA_FUNCTION_NAME && !process.env
 
 const app = express();
 
-// Optional: If you'd like to disable webgl, false is recommended for serverless
+// Optional: If you'd like to use the legacy headless mode. "new" is the default.
+chromium.setHeadlessMode = true;
+
+// Optional: If you'd like to disable webgl, true is the default.
 chromium.setGraphicsMode = false;
 
 // Function to determine if running locally or in a serverless environment
