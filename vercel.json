@@ -1,0 +1,4 @@
+{ "version": 2, "functions": {
+    "api/**/*.{js,ts}": {
+      "maxDuration": 60
+    }},"rewrites": [{ "source": "/(.*)", "destination": "/api" }] }
