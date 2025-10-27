@@ -1,11 +1,12 @@
 const express = require('express');
 const puppeteer = require('puppeteer');
+const puppeteerCore = require('puppeteer-core');
 const chromium = require('@sparticuz/chromium');
 
 const app = express();
 
 // Function to determine if running locally or in a serverless environment
-const isLocal = () => !process.env.AWS_LAMBDA_FUNCTION_NAME;
+const isLocal = () => !process.env.VERCEL && !process.env.AWS_LAMBDA_FUNCTION_NAME && !process.env.VERCEL_ENV;
 
 // Function to launch the browser
 const launchBrowser = async () => {
@@ -19,7 +20,7 @@ const launchBrowser = async () => {
             });
         } else {
             console.log('Running in a serverless environment. Using Chromium.');
-            browser = await puppeteer.launch({
+            browser = await puppeteerCore.launch({
                 args: chromium.args,
                 defaultViewport: chromium.defaultViewport,
                 executablePath: await chromium.executablePath(),
