@@ -10,6 +10,9 @@ if (!process.env.VERCEL && !process.env.AWS_LAMBDA_FUNCTION_NAME && !process.env
 
 const app = express();
 
+// Optional: If you'd like to disable webgl, false is recommended for serverless
+chromium.setGraphicsMode = false;
+
 // Function to determine if running locally or in a serverless environment
 const isLocal = () => !process.env.VERCEL && !process.env.AWS_LAMBDA_FUNCTION_NAME && !process.env.VERCEL_ENV;
 
@@ -30,7 +33,6 @@ const launchBrowser = async () => {
                 defaultViewport: chromium.defaultViewport,
                 executablePath: await chromium.executablePath(),
                 headless: chromium.headless,
-                ignoreHTTPSErrors: true,
             });
         }
         console.log('Browser launched successfully');
