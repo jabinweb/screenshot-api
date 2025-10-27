@@ -3,8 +3,6 @@ const puppeteer = require('puppeteer');
 const chromium = require('@sparticuz/chromium');
 
 const app = express();
-const port = 3000
-
 
 // Function to determine if running locally or in a serverless environment
 const isLocal = () => !process.env.AWS_LAMBDA_FUNCTION_NAME;
@@ -77,10 +75,6 @@ app.get('/screenshot', async (req, res) => {
         if (browser) await browser.close();
     }
 });
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
 
 // Export the Express app for Vercel
 module.exports = app;
