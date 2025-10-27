@@ -99,3 +99,12 @@ app.get('/screenshot', async (req, res) => {
 
 // Export the Express app for Vercel
 module.exports = app;
+
+// Start server if not in serverless environment
+if (isLocal()) {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`Screenshot API running on http://localhost:${PORT}`);
+        console.log(`Usage: http://localhost:${PORT}/screenshot?url=https://example.com`);
+    });
+}
