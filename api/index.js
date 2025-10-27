@@ -5,7 +5,7 @@ const chromium = require('@sparticuz/chromium');
 const app = express();
 
 // Function to determine if running locally or in a serverless environment
-const isLocal = () => !process.env.AWS_LAMBDA_FUNCTION_NAME;
+const isLocal = () => !process.env.AWS_LAMBDA_FUNCTION_NAME && !process.env.VERCEL;
 
 // Function to launch the browser
 const launchBrowser = async () => {
