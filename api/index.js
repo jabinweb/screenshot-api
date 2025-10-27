@@ -1,5 +1,5 @@
 const express = require('express');
-const chromium = require('@sparticuz/chromium-min');
+const chromium = require('@sparticuz/chromium');
 const puppeteerCore = require('puppeteer-core');
 
 // Only require puppeteer for local development
