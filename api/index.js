@@ -25,10 +25,24 @@ const launchBrowser = async () => {
             });
         } else {
             console.log('Running in a serverless environment. Using Chromium.');
+            console.log('Chromium version:', require('@sparticuz/chromium/package.json').version);
+            console.log('Puppeteer-core version:', require('puppeteer-core/package.json').version);
+            console.log('Node version:', process.version);
+            console.log('Platform:', process.platform);
+            console.log('Environment variables:', {
+                VERCEL: process.env.VERCEL,
+                VERCEL_ENV: process.env.VERCEL_ENV,
+                AWS_LAMBDA: process.env.AWS_LAMBDA_FUNCTION_NAME
+            });
+            
+            const execPath = await chromium.executablePath();
+            console.log('Chromium executable path:', execPath);
+            console.log('Chromium args:', chromium.args);
+            
             browser = await puppeteerCore.launch({
                 args: chromium.args,
                 defaultViewport: chromium.defaultViewport,
-                executablePath: await chromium.executablePath(),
+                executablePath: execPath,
                 headless: chromium.headless,
                 ignoreHTTPSErrors: true,
             });
@@ -37,6 +51,7 @@ const launchBrowser = async () => {
         return browser;
     } catch (error) {
         console.error('Error launching browser:', error);
+        console.error('Error stack:', error.stack);
         throw new Error('Browser initialization failed');
     }
 };
