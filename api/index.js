@@ -11,7 +11,14 @@ if (!process.env.VERCEL && !process.env.AWS_LAMBDA_FUNCTION_NAME && !process.env
 const app = express();
 
 // Function to determine if running locally or in a serverless environment
-const isLocal = () => !process.env.VERCEL && !process.env.AWS_LAMBDA_FUNCTION_NAME && !process.env.VERCEL_ENV;
+const isLocal = () => {
+    // Check if NOT on Render, Vercel, AWS Lambda, or other cloud platforms
+    return !process.env.RENDER && 
+           !process.env.VERCEL && 
+           !process.env.AWS_LAMBDA_FUNCTION_NAME && 
+           !process.env.VERCEL_ENV &&
+           process.env.NODE_ENV !== 'production';
+};
 
 // Function to launch the browser
 const launchBrowser = async () => {
