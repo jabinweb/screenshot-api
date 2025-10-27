@@ -1,7 +1,12 @@
 const express = require('express');
-const puppeteer = require('puppeteer');
-const puppeteerCore = require('puppeteer-core');
 const chromium = require('@sparticuz/chromium');
+const puppeteerCore = require('puppeteer-core');
+
+// Only require puppeteer for local development
+let puppeteer;
+if (!process.env.VERCEL && !process.env.AWS_LAMBDA_FUNCTION_NAME && !process.env.VERCEL_ENV) {
+    puppeteer = require('puppeteer');
+}
 
 const app = express();
 
@@ -21,14 +26,11 @@ const launchBrowser = async () => {
         } else {
             console.log('Running in a serverless environment. Using Chromium.');
             browser = await puppeteerCore.launch({
-                args: [
-                    ...chromium.args,
-                    '--hide-scrollbars',
-                    '--disable-web-security',
-                ],
+                args: chromium.args,
                 defaultViewport: chromium.defaultViewport,
                 executablePath: await chromium.executablePath(),
                 headless: chromium.headless,
+                ignoreHTTPSErrors: true,
             });
         }
         console.log('Browser launched successfully');
