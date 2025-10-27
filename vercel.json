@@ -1,4 +1,16 @@
-{ "version": 2, "functions": {
+{
+  "version": 2,
+  "buildCommand": "npm install",
+  "functions": {
     "api/**/*.{js,ts}": {
-      "maxDuration": 60
-    }},"rewrites": [{ "source": "/(.*)", "destination": "/api" }] }
+      "maxDuration": 60,
+      "runtime": "nodejs20.x"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api"
+    }
+  ]
+}
