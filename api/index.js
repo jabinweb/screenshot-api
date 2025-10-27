@@ -27,14 +27,12 @@ const launchBrowser = async () => {
             console.log('Running in a serverless environment. Using Chromium.');
             console.log('Environment check - VERCEL:', process.env.VERCEL, 'VERCEL_ENV:', process.env.VERCEL_ENV);
             
-            // Set font configuration for serverless
-            chromium.setHeadlessMode = true;
-            chromium.setGraphicsMode = false;
-            
             browser = await puppeteerCore.launch({
                 args: chromium.args,
                 defaultViewport: chromium.defaultViewport,
-                executablePath: await chromium.executablePath(),
+                executablePath: await chromium.executablePath({
+                    cacheDir: '/tmp'
+                }),
                 headless: chromium.headless,
                 ignoreHTTPSErrors: true,
             });
