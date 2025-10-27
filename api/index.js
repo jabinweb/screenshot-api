@@ -21,11 +21,14 @@ const launchBrowser = async () => {
         } else {
             console.log('Running in a serverless environment. Using Chromium.');
             browser = await puppeteerCore.launch({
-                args: chromium.args,
+                args: [
+                    ...chromium.args,
+                    '--hide-scrollbars',
+                    '--disable-web-security',
+                ],
                 defaultViewport: chromium.defaultViewport,
                 executablePath: await chromium.executablePath(),
                 headless: chromium.headless,
-                ignoreHTTPSErrors: true,
             });
         }
         console.log('Browser launched successfully');
