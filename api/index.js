@@ -5,7 +5,7 @@ const chromium = require('@sparticuz/chromium');
 const app = express();
 
 // Function to determine if running locally or in a serverless environment
-const isLocal = () => !process.env.AWS_LAMBDA_FUNCTION_NAME && !process.env.VERCEL;
+const isLocal = () => !process.env.AWS_LAMBDA_FUNCTION_NAME;
 
 // Function to launch the browser
 const launchBrowser = async () => {
@@ -78,12 +78,3 @@ app.get('/screenshot', async (req, res) => {
 
 // Export the Express app for Vercel
 module.exports = app;
-
-// Start server locally if not in serverless environment
-if (isLocal()) {
-    const PORT = process.env.PORT || 3000;
-    app.listen(PORT, () => {
-        console.log(`Screenshot API running on http://localhost:${PORT}`);
-        console.log(`Usage: http://localhost:${PORT}/screenshot?url=https://example.com`);
-    });
-}
